@@ -18,4 +18,12 @@
       <ProjectReference Include="..\Sofa.Database\Sofa.Database.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Properties\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Properties\launchSettings.json" />
+    </ItemGroup>
+
 </Project>
