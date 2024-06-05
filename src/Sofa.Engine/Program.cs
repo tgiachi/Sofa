@@ -8,7 +8,7 @@ namespace Sofa.Engine;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -47,10 +47,10 @@ public class Program
         using (var scope = app.Services.CreateScope())
         {
             var factory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<SofaDbContext>>();
-            using var context = factory.CreateDbContext();
-            context.Database.Migrate();
+            await using var context = await factory.CreateDbContextAsync();
+            await context.Database.MigrateAsync();
         }
 
-        app.Run();
+        await app.RunAsync();
     }
 }
