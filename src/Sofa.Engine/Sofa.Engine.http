@@ -1,0 +1,6 @@
+@Sofa.Engine_HostAddress = http://localhost:5054
+
+GET {{Sofa.Engine_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
