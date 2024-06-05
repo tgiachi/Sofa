@@ -17,7 +17,7 @@ public class Program
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilog(Log.Logger);
 
-        builder.Services.AddDbContextPool<SofaDbContext>(optionsBuilder =>
+        builder.Services.AddPooledDbContextFactory<SofaDbContext>(optionsBuilder =>
             optionsBuilder.UseSqlite("Data Source=/tmp/sofa.db")
         );
 
@@ -82,7 +82,6 @@ public class Program
             var factory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<SofaDbContext>>();
             using var context = factory.CreateDbContext();
             context.Database.Migrate();
-
         }
 
         app.Run();

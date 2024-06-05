@@ -21,12 +21,16 @@ public class SofaDbContext : DbContext
 
     public DbSet<PlaylistDetailEntity> PlaylistDetails { get; set; }
 
-    // public SofaDbContext(DbContextOptions<SofaDbContext> options) : base(options)
-    // {
-    // }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public SofaDbContext(DbContextOptions<SofaDbContext> options) : base(options)
     {
-        optionsBuilder.UseSqlite("Data Source=sofa.db");
     }
+
+    public SofaDbContext()
+    {
+    }
+
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     optionsBuilder.UseSqlite("Data Source=sofa.db");
+    // }
 }
