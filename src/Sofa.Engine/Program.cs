@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Sofa.Core.Data.Messages;
 using Sofa.Core.Extensions;
 using Sofa.Database.Context;
 using Sofa.Database.Modules;
+using Sofa.Engine.Routes;
+using Sofa.Engine.Services;
+using Sofa.Engine.Services.Queues;
 
 namespace Sofa.Engine;
 
@@ -16,6 +21,17 @@ public class Program
 
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilog(Log.Logger);
+
+        builder.Services.AddMessagePipe();
+
+        builder.Services.AddSingleton<MediaScannerQueueService>();
+        builder.Services.AddSingleton<MediaScannerService>();
+        builder.Services.AddHostedService<MediaScannerQueueService>(
+            provider => provider.GetRequiredService<MediaScannerQueueService>()
+        );
+
+
+        builder.Services.AddScoped<MediaDirectoriesService>();
 
         builder.Services.AddPooledDbContextFactory<SofaDbContext>(
             optionsBuilder =>
@@ -31,6 +47,22 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
+
+        app.MapMediaDirectoriesRoutes();
+
+
+        app.MapGet(
+            "/queue",
+            async ([FromServices] MediaScannerQueueService scannerQueueService) =>
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    await scannerQueueService.EnqueueAsync(new MediaAddedEvent("test", "test"), CancellationToken.None);
+                }
+
+                return Results.Ok();
+            }
+        );
 
         // Configure the HTTP request pipeline.
         app.UseSwagger();

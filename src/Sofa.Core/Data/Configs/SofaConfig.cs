@@ -1,4 +1,4 @@
-namespace Sofa.Core.Data;
+namespace Sofa.Core.Data.Configs;
 
 public class SofaConfig
 {
