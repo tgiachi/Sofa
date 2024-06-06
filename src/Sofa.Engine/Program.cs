@@ -24,11 +24,15 @@ public class Program
 
         builder.Services.AddMessagePipe();
 
+        builder.Services.AddSingleton<MediaService>();
         builder.Services.AddSingleton<MediaScannerQueueService>();
         builder.Services.AddSingleton<MediaScannerService>();
+        builder.Services.AddSingleton<MediaParserService>();
         builder.Services.AddHostedService<MediaScannerQueueService>(
             provider => provider.GetRequiredService<MediaScannerQueueService>()
         );
+
+        builder.Services.AddHostedService<MediaParserService>(provider => provider.GetRequiredService<MediaParserService>());
 
 
         builder.Services.AddScoped<MediaDirectoriesService>();

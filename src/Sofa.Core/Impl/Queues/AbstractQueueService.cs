@@ -34,7 +34,7 @@ public abstract class AbstractQueueService<TEntity> : BackgroundService, IBackgr
 
     public ValueTask EnqueueAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation(
+        _logger.LogDebug(
             "Queue message type: {MessageType} size: {Size}",
             typeof(TEntity).Name,
             _channel.Reader.Count
@@ -49,7 +49,7 @@ public abstract class AbstractQueueService<TEntity> : BackgroundService, IBackgr
         {
             var message = await _channel.Reader.ReadAsync(stoppingToken);
 
-            _logger.LogInformation(
+            _logger.LogDebug(
                 "Dequeued message: {Message} message remains: {Messages}",
                 message,
                 _channel.Reader.Count
