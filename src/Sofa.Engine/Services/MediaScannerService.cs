@@ -46,12 +46,15 @@ public class MediaScannerService
 
         _logger.LogInformation("Found {Count} files in {Elapsed}ms", files.Length, sw.ElapsedMilliseconds);
 
-        foreach (var file in files)
-        {
-            var hash = HashingUtils.GetFileHash(file);
-            var mediaAdded = new MediaAddedEvent(file, hash);
+        Parallel.ForEachAsync(
+            files,
+            async (file, token) =>
+            {
+                var hash = HashingUtils.GetFileHash(file);
+                var mediaAdded = new MediaAddedEvent(file, hash, Path.GetExtension(file));
 
-            await _mediaScannerQueueService.EnqueueAsync(mediaAdded, CancellationToken.None);
-        }
+                await _mediaScannerQueueService.EnqueueAsync(mediaAdded, token);
+            }
+        );
     }
 }

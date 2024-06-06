@@ -51,19 +51,6 @@ public class Program
         app.MapMediaDirectoriesRoutes();
 
 
-        app.MapGet(
-            "/queue",
-            async ([FromServices] MediaScannerQueueService scannerQueueService) =>
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    await scannerQueueService.EnqueueAsync(new MediaAddedEvent("test", "test"), CancellationToken.None);
-                }
-
-                return Results.Ok();
-            }
-        );
-
         // Configure the HTTP request pipeline.
         app.UseSwagger();
         app.UseSwaggerUI();
