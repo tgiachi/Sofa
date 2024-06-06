@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sofa.Database.Context;
 
@@ -10,9 +11,11 @@ using Sofa.Database.Context;
 namespace Sofa.Database.Migrations
 {
     [DbContext(typeof(SofaDbContext))]
-    partial class SofaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240606095230_AddedNullableToAlbum")]
+    partial class AddedNullableToAlbum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
@@ -182,6 +185,7 @@ namespace Sofa.Database.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Genres")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<long>("Size")

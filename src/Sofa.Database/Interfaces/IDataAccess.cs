@@ -29,4 +29,6 @@ public interface IDataAccess<TEntity> where TEntity : class, IBaseDbEntity
     );
 
     Task<long> CountAsync(CancellationToken cancellationToken = default);
+
+    Task<long> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
 }

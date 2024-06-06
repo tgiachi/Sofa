@@ -26,7 +26,7 @@ public class MediaParserService : IHostedService
         if (media.Extension == ".mp3" || media.Extension == ".flac")
         {
 
-            await _mediaService.AddMedia(media);
+            await _mediaService.AddMediaAsync(media);
 
             return;
         }

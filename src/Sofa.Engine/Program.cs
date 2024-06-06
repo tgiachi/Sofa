@@ -17,7 +17,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", Serilog.Events.LogEventLevel.Warning)
+            .WriteTo.Console()
+            .CreateLogger();
 
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilog(Log.Logger);
@@ -71,6 +74,7 @@ public class Program
         {
             var factory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<SofaDbContext>>();
             await using var context = await factory.CreateDbContextAsync();
+
             await context.Database.MigrateAsync();
         }
 

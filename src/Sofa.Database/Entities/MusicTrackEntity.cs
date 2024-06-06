@@ -21,7 +21,7 @@ public class MusicTrackEntity : AbstractBaseEntity
 
     public MusicArtistEntity Artist { get; set; }
 
-    public string[] Genres { get; set; }
+    public string[]? Genres { get; set; }
 
     public TimeSpan Duration { get; set; }
 

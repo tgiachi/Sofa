@@ -117,4 +117,14 @@ public class AbstractDataAccess<TEntity> : IDataAccess<TEntity> where TEntity : 
 
         return await dbContext.Set<TEntity>().LongCountAsync(cancellationToken);
     }
+
+    public async Task<long> CountAsync(
+        Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default
+    )
+    {
+        _logger.LogDebug("Counting entities by expression {Expression}", expression);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
+
+        return await dbContext.Set<TEntity>().LongCountAsync(expression, cancellationToken);
+    }
 }
