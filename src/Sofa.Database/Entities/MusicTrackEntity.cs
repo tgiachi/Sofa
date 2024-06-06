@@ -6,9 +6,10 @@ using Sofa.Database.Entities.Base;
 namespace Sofa.Database.Entities;
 
 [Table("musics"), Index(nameof(Genres)), Index(nameof(Title))]
-
 public class MusicTrackEntity : AbstractBaseEntity
 {
+    [MaxLength(200)] public string Hash { get; set; }
+
     [MaxLength(500)] public string FileName { get; set; }
 
     [MaxLength(200)] public string Title { get; set; }

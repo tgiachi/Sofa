@@ -62,6 +62,7 @@ public class MediaService
         var track = new MusicTrackEntity
         {
             Id = Guid.NewGuid(),
+            Hash = media.Hash,
             AlbumId = albumId,
             ArtistId = artistId,
             Title = tag.Title,

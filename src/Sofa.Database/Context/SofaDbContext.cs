@@ -28,7 +28,7 @@ public class SofaDbContext : DbContext
     public SofaDbContext()
     {
     }
-
+    //
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     // {
     //     optionsBuilder.UseSqlite("Data Source=sofa.db");
